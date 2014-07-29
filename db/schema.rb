@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140727202921) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "recipes", force: true do |t|
     t.string   "url"
     t.integer  "shopping_list_id"
