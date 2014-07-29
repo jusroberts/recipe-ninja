@@ -31,6 +31,7 @@ gem 'hangry'
 gem 'ingreedy'
 gem 'foundation-rails'
 gem 'haml-rails'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'binding_of_caller'
