@@ -13,7 +13,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require turbolinks
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+$('#add_recipe').click(function(){
+    file_holder = $('#recipes');
+    new_index = file_holder.children().length - 1;
+    html = "<div class=\"row recipe\">";
+    html += "<div class=\"columns small-1\">"
+    html += "<label for=\"shopping_list_recipes_attributes_" + new_index + "_Url\">Url</label>"
+    html += "</div>";
+    html += "<div class=\"columns small-11\">";
+    html += "<input id=\"form_recipes_attributes_" + new_index + "_file\" name=\"form[recipes_attributes][" + new_index + "][url]\" type=\"text\">";
+    html += "</div></div>";
+
+    file_holder.append(html);
+});

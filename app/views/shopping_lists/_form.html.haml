@@ -9,10 +9,14 @@
   .field
     = f.label :title
     = f.text_field :title
-  .field
-    =f.fields_for :recipes do |recipe_form|
-      .field
-        = recipe_form.label :url
-        = recipe_form.text_field :url
+  .row
+    %h3
+      Recipes
+      %i.fi-plus#add_recipe
+    #recipes
+      =f.fields_for :recipes do |recipe_form|
+        .row.recipe
+          .columns.small-1= recipe_form.label "Url"
+          .columns.small-11= recipe_form.text_field :url
   .actions
     = f.submit 'Save'

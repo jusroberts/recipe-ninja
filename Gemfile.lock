@@ -45,6 +45,9 @@ GEM
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.2.1)
+    foundation-icons-sass-rails (3.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     foundation-rails (5.3.1.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
@@ -147,6 +150,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 4.0.0)
+  foundation-icons-sass-rails
   foundation-rails
   haml-rails
   hangry
