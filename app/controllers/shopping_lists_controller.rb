@@ -10,7 +10,7 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1
   # GET /shopping_lists/1.json
   def show
-    @ingredient_list = combine_ingredients(@shopping_list)
+    @ingredient_list = ShoppingListsProcedure.new(@shopping_list).ingredient_list
   end
 
   # GET /shopping_lists/new
@@ -21,14 +21,14 @@ class ShoppingListsController < ApplicationController
 
   # GET /shopping_lists/1/edit
   def edit
-    2.times { @shopping_list.recipes.build}
+    redirect_to root_path
   end
 
   # POST /shopping_lists
   # POST /shopping_lists.json
   def create
-    @shopping_list = ShoppingList.new(shopping_list_params)
-
+    modified_params = remove_empty_recipes(shopping_list_params)
+    @shopping_list = ShoppingList.new(modified_params)
     respond_to do |format|
       if @shopping_list.save
         format.html { redirect_to @shopping_list, notice: 'Shopping list was successfully created.' }
@@ -43,6 +43,7 @@ class ShoppingListsController < ApplicationController
   # PATCH/PUT /shopping_lists/1
   # PATCH/PUT /shopping_lists/1.json
   def update
+
     respond_to do |format|
       if @shopping_list.update(shopping_list_params)
         format.html { redirect_to @shopping_list, notice: 'Shopping list was successfully updated.' }
@@ -65,6 +66,15 @@ class ShoppingListsController < ApplicationController
   end
 
   private
+
+  def remove_empty_recipes hash
+    params_hash = hash
+    params_hash["recipes_attributes"].each do |k, v|
+      params_hash["recipes_attributes"].delete(k) if v["url"].blank?
+    end
+    params_hash
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_shopping_list
       @shopping_list = ShoppingList.find(params[:id])
@@ -75,27 +85,4 @@ class ShoppingListsController < ApplicationController
       params.require(:shopping_list).permit(:title, recipes_attributes: [:id, :url])
     end
 
-  def combine_ingredients(shopping_list)
-    ingredients = []
-    shopping_list.recipes.each do |recipe|
-      parsed_recipe = parse_recipe recipe.url
-      parse_ingredients(parsed_recipe.ingredients).each do |ingredient|
-        ingredients << ingredient
-      end
-    end
-    ingredients
-  end
-
-  def parse_recipe recipe_url
-    Hangry.parse(open(recipe_url).read)
-  end
-
-  def parse_ingredients ingredients
-    ingredients.map do |ingredient|
-      ingredient.gsub!("\n", '')
-      ingredient.gsub!("\r", '')
-      i = ingredient.split.join(" ")
-      Ingreedy.parse(i)
-    end
-  end
 end
