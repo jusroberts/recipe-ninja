@@ -19,7 +19,7 @@ $(function(){ $(document).foundation(); });
 
 $('#add_recipe').click(function(){
     file_holder = $('#recipes');
-    new_index = file_holder.children().length - 1;
+    new_index = file_holder.children().length;
     html = "<div class=\"row recipe\">";
     html += "<div class=\"columns small-1\">"
     html += "<label for=\"shopping_list_recipes_attributes_" + new_index + "_Url\">Url</label>"
