@@ -11,4 +11,5 @@ module ShoppingListsHelper
       Ingreedy.parse(i)
     end
   end
+
 end

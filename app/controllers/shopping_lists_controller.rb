@@ -10,6 +10,7 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1
   # GET /shopping_lists/1.json
   def show
+    @ingredient_list = combine_ingredients(@shopping_list)
   end
 
   # GET /shopping_lists/new
@@ -73,4 +74,28 @@ class ShoppingListsController < ApplicationController
     def shopping_list_params
       params.require(:shopping_list).permit(:title, recipes_attributes: [:id, :url])
     end
+
+  def combine_ingredients(shopping_list)
+    ingredients = []
+    shopping_list.recipes.each do |recipe|
+      parsed_recipe = parse_recipe recipe.url
+      parse_ingredients(parsed_recipe.ingredients).each do |ingredient|
+        ingredients << ingredient
+      end
+    end
+    ingredients
+  end
+
+  def parse_recipe recipe_url
+    Hangry.parse(open(recipe_url).read)
+  end
+
+  def parse_ingredients ingredients
+    ingredients.map do |ingredient|
+      ingredient.gsub!("\n", '')
+      ingredient.gsub!("\r", '')
+      i = ingredient.split.join(" ")
+      Ingreedy.parse(i)
+    end
+  end
 end

@@ -4,19 +4,17 @@
   %b Title:
   = @shopping_list.title
 .row
+  .columns.small-2 Using:
   - @shopping_list.recipes.each do |recipe|
-    -parsed = parsed_recipe recipe.url
-    -ingredients = parse_ingredients parsed.ingredients
+    .columns.small-10=link_to recipe.url, recipe.url
+.row
+  %h2 Shopping List
+.row
+  -@ingredient_list.each do |ingredient|
     .row
-      %h4=parsed.name
-    .row
-      =parsed.description
-    .row
-      -ingredients.each do |ingredient|
-        .row
-          .columns.small-1=ingredient.amount
-          .columns.small-2=ingredient.unit
-          .columns.small-9=ingredient.ingredient
+      .columns.small-1=ingredient.amount
+      .columns.small-2=ingredient.unit
+      .columns.small-9=ingredient.ingredient
 
 
 = link_to 'Edit', edit_shopping_list_path(@shopping_list)
