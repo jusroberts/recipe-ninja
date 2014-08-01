@@ -5,10 +5,10 @@
 .row
   - @shopping_list_object.recipes.each do |recipe|
     =link_to recipe.recipe_link do
-      .recipe
-        .recipe-image
+      .recipe.columns.small-2
+        .recipe-image.columns
           =image_tag(recipe.image_link, size: "200x200", alt: "#{recipe.title}")
-        =recipe.title
+        .center=recipe.title
 .row.ingredients_list
   -@shopping_list_object.ingredient_list.each do |ingredient|
     .row

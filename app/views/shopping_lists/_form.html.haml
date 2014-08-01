@@ -6,18 +6,18 @@
         - @shopping_list.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :title
-    = f.text_field :title
+  .row
+    .columns.small-1= f.label :title
+    .columns.small-11= f.text_field :title
   .row
     %h3
       Recipes
       %i.fi-plus#add_recipe
-    #recipes
-      =f.fields_for :recipes do |recipe_form|
-        .row.recipe
-          .columns.small-1= recipe_form.label "Url"
-          .columns.small-11= recipe_form.text_field :url
+    %br
+  =f.fields_for :recipes do |recipe_form|
+    .row
+      .columns.small-1= recipe_form.label "Url"
+      .columns.small-11= recipe_form.text_field :url
   .row
     .columns.small-2= link_to 'Back', shopping_lists_path, class: 'button'
     .columns.small-2= f.submit 'Save', class: 'button'
