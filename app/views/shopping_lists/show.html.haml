@@ -1,18 +1,15 @@
 %p#notice= notice
 
-%p
-  %b Title:
-  = @shopping_list.title
 .row
-  .columns.small-2 Using:
-  .columns.small-10
+  %h1= @shopping_list.title
+.row
+  .columns.small-1.recipes Recipes:
+  .columns.small-11
     - @shopping_list.recipes.each do |recipe|
       .columns=link_to recipe.url, recipe.url
-.row
-  %h2 Shopping List
-.row
+.row.ingredients_list
   -@ingredient_list.each do |ingredient|
     .row
-      =ingredient
+      .ingredient=ingredient
 
 = link_to 'Back', shopping_lists_path
