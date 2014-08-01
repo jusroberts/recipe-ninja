@@ -5,8 +5,9 @@
   = @shopping_list.title
 .row
   .columns.small-2 Using:
-  - @shopping_list.recipes.each do |recipe|
-    .columns.small-10=link_to recipe.url, recipe.url
+  .columns.small-10
+    - @shopping_list.recipes.each do |recipe|
+      .columns=link_to recipe.url, recipe.url
 .row
   %h2 Shopping List
 .row

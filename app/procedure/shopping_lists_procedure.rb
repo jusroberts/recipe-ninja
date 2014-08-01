@@ -23,9 +23,12 @@ class ShoppingListsProcedure
   end
 
   def retrieve_recipes
-    @shopping_list.recipes.map do |recipe|
-      parse_recipe(recipe.url)
+    recipes = []
+    @shopping_list.recipes.each do |recipe|
+      next if recipe.url.blank?
+      recipes << parse_recipe(recipe.url)
     end
+    recipes
   end
 
 
