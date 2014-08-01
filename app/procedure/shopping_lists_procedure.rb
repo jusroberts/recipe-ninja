@@ -121,7 +121,15 @@ class ShoppingListsProcedure
   end
 
   def make_readable(ingredient_list)
-    ingredient_list
+    ingredient_list.map do |ingredient|
+      "#{ingredient.amount} #{pluralize(ingredient.amount, ingredient.unit)} #{ingredient.ingredient}"
+    end
+  end
+
+  def pluralize(number, unit)
+    return "" if unit.nil?
+    return "#{unit}" if number == 1
+    return "#{unit}s"
   end
 end
 

@@ -13,8 +13,6 @@
 .row
   -@ingredient_list.each do |ingredient|
     .row
-      .columns.small-1=ingredient.amount
-      .columns.small-2=ingredient.unit
-      .columns.small-9=ingredient.ingredient
+      =ingredient
 
 = link_to 'Back', shopping_lists_path
