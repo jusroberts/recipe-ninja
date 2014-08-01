@@ -10,7 +10,7 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1
   # GET /shopping_lists/1.json
   def show
-    @ingredient_list = ShoppingListsProcedure.new(@shopping_list).ingredient_list
+    @shopping_list_object = ShoppingListsProcedure.new(@shopping_list)
   end
 
   # GET /shopping_lists/new

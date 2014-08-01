@@ -1,7 +1,8 @@
 class ShoppingListsProcedure
-  attr_accessor :shopping_list, :ingredient_list
+  attr_accessor :shopping_list, :ingredient_list, :recipes
   def initialize(shopping_list)
     @shopping_list = shopping_list
+    @recipes = retrieve_recipes
     build_ingredient_list
   end
 
@@ -16,8 +17,7 @@ class ShoppingListsProcedure
   private
 
   def get_ingredient_lists
-    recipes = retrieve_recipes
-    recipes.map do |recipe|
+    @recipes.map do |recipe|
       recipe.ingredients
     end
   end
@@ -33,7 +33,19 @@ class ShoppingListsProcedure
 
 
   def parse_recipe recipe_url
-    Hangry.parse(open(recipe_url).read)
+    recipe_html = open(recipe_url).read
+    parsed_recipe = Hangry.parse(recipe_html)
+
+    Structs::Recipe.new(
+      parsed_recipe.name,
+      get_picture_link(recipe_html, recipe_url),
+      recipe_url,
+      parsed_recipe.ingredients
+    )
+  end
+
+  def get_picture_link html, url
+    ImageParser.new(url, html).get_link
   end
 
   def parse_ingredients_lists ingredients_lists
@@ -71,7 +83,7 @@ class ShoppingListsProcedure
   end
 
   def convert_ingredient(unconverted_ingredient)
-    ingredient = Ingredient.new
+    ingredient = Structs::Ingredient.new
     ingredient.ingredient = unconverted_ingredient.ingredient
     ingredient.amount = unconverted_ingredient.amount
     ingredient.unit = unconverted_ingredient.unit
@@ -229,5 +241,41 @@ class UnitConverter
   end
 end
 
-class Ingredient < Struct.new(:ingredient, :unit, :amount)
+class ImageParser
+  attr_accessor :link, :html
+
+  def initialize(link, html)
+    @link = link
+    @html = html
+  end
+
+  def get_link
+    host = parse_host
+    if host == "allrecipes.com" || host == "www.allrecipes.com"
+      parse_all_recipes
+    else
+      return "http://thumbs.dreamstime.com/z/chef-cook-baker-fruti-food-veges-17750784.jpg"
+    end
+
+  end
+
+  private
+
+  def parse_all_recipes
+    doc = Nokogiri::HTML.parse(@html)
+    doc.css("#imgPhoto").first[:src]
+  end
+
+  def parse_host
+    URI(link).host
+  end
+
+end
+
+module Structs
+  class Ingredient < Struct.new(:ingredient, :unit, :amount)
+  end
+
+  class Recipe < Struct.new(:title, :image_link, :recipe_link, :ingredients)
+  end
 end

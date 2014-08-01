@@ -3,12 +3,14 @@
 .row
   %h1= @shopping_list.title
 .row
-  .columns.small-3.medium-2.large-1.recipes Recipes:
-  .columns.small-9.medium-10.large-11
-    - @shopping_list.recipes.each do |recipe|
-      .columns=link_to recipe.url, recipe.url
+  - @shopping_list_object.recipes.each do |recipe|
+    =link_to recipe.recipe_link do
+      .recipe
+        .recipe-image
+          =image_tag(recipe.image_link, size: "200x200", alt: "#{recipe.title}")
+        =recipe.title
 .row.ingredients_list
-  -@ingredient_list.each do |ingredient|
+  -@shopping_list_object.ingredient_list.each do |ingredient|
     .row
       .list_entry=ingredient
 %br
