@@ -18,5 +18,7 @@
         .row.recipe
           .columns.small-1= recipe_form.label "Url"
           .columns.small-11= recipe_form.text_field :url
-  .actions
-    = f.submit 'Save'
+  .row
+    .columns.small-2= link_to 'Back', shopping_lists_path, class: 'button'
+    .columns.small-2= f.submit 'Save', class: 'button'
+

@@ -10,6 +10,8 @@
 .row.ingredients_list
   -@ingredient_list.each do |ingredient|
     .row
-      .ingredient=ingredient
-
-= link_to 'Back', shopping_lists_path
+      .list_entry=ingredient
+%br
+.row
+  .columns.small-2= link_to 'Back', shopping_lists_path, class: 'button'
+  .columns.small-2= link_to 'Destroy', @shopping_list, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'button'

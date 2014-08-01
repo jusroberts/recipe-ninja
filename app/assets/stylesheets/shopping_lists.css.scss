@@ -10,15 +10,32 @@
   }
 }
 
-.ingredient{
-  font-family: 'Armata', sans-serif;
-  margin: .75em 1.5em 0;
-  border-bottom: 1px #CCC solid;
-}
 .ingredients_list{
   padding-top: 1em;
 }
 
 .recipes{
   font-size: 1.4em;
+}
+
+.shopping_list{
+  font-size: 1.4em;
+}
+
+.list_entry{
+  font-family: 'Armata', sans-serif;
+  margin: 0 1.5em;
+  padding: .75em 1em 0;
+  border-bottom: 1px #CCC solid;
+}
+
+.new_link{
+  vertical-align: bottom;
+}
+
+.list_link{
+  color: #000;
+  &:hover {
+    background-color: #eee;
+  }
 }

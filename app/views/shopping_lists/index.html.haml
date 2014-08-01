@@ -1,18 +1,12 @@
-%h1 Public Shopping Lists
+.row
+  .columns.small-9
+    %h1 Public Shopping Lists
+  .columns.small-3= link_to 'New Shopping List', new_shopping_list_path, class: 'button new_link'
 
-%table
-  %tr
-    %th Title
-    %th
-    %th
-    %th
-
-  - @shopping_lists.each do |shopping_list|
-    %tr
-      %td= shopping_list.title
-      %td= link_to 'Show', shopping_list
-      %td= link_to 'Destroy', shopping_list, :method => :delete, :data => { :confirm => 'Are you sure?' }
+- @shopping_lists.reverse.each do |shopping_list|
+  =link_to shopping_list do
+    .row
+      .shopping_list.list_entry.list_link=shopping_list.title
 
 %br
 
-= link_to 'New Shopping list', new_shopping_list_path
