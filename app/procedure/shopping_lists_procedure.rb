@@ -56,7 +56,9 @@ class ShoppingListsProcedure
     parsed_ingredient_lists.each do |ingredients_list|
       ingredients_list.each do |unconverted_ingredient|
         ingredient = convert_ingredient(unconverted_ingredient)
-
+        if ingredient.ingredient.blank?
+          next
+        end
         if ingredients_contains_ingredient(ingredients, ingredient)
           ingredients = add_ingredient_to_ingredients(ingredients, ingredient)
         else
