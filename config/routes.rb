@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :shopping_lists
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -7,6 +8,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'shopping_lists#index'
 
+  get 'about' => 'about#index', as: :about
+  get 'about/changelog' => 'about#changelog', as: :changelog
+
+  get 'my_lists' => 'shopping_lists#my_lists', as: :my_lists
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

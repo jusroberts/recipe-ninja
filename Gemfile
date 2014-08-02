@@ -21,6 +21,7 @@ gem 'foundation-rails'
 gem 'foundation-icons-sass-rails'
 gem 'haml-rails'
 gem 'newrelic_rpm'
+gem 'devise'
 
 group :development do
   gem 'binding_of_caller'

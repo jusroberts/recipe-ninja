@@ -9,6 +9,10 @@
   .row
     .columns.small-1= f.label :title
     .columns.small-11= f.text_field :title
+  -if current_user
+    .row
+      .columns.small-1= f.label :private?
+      .columns.small-11= f.check_box :private
   .row
     %h3
       Recipes

@@ -4,12 +4,20 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists
   # GET /shopping_lists.json
   def index
-    @shopping_lists = ShoppingList.all
+    @shopping_lists = ShoppingList.where(user_id: nil)
+  end
+
+  def my_lists
+    authenticate_user!
+    @shopping_lists = ShoppingList.where(user_id: current_user.id)
   end
 
   # GET /shopping_lists/1
   # GET /shopping_lists/1.json
   def show
+    if not_current_users_list
+      redirect_to root_path
+    end
     @shopping_list_object = ShoppingListsProcedure.new(@shopping_list)
   end
 
@@ -28,6 +36,10 @@ class ShoppingListsController < ApplicationController
   # POST /shopping_lists.json
   def create
     modified_params = remove_empty_recipes(shopping_list_params)
+    binding.pry
+    if shopping_list_params[:private] == "1"
+      modified_params[:user_id] = current_user.id
+    end
     @shopping_list = ShoppingList.new(modified_params)
     respond_to do |format|
       if @shopping_list.save
@@ -67,6 +79,13 @@ class ShoppingListsController < ApplicationController
 
   private
 
+  def not_current_users_list
+    return false if @shopping_list.user_id.nil?
+    return true unless current_user
+    return true if current_user.id != @shopping_list.user_id
+    return false
+  end
+
   def remove_empty_recipes hash
     params_hash = hash
     params_hash["recipes_attributes"].each do |k, v|
@@ -82,7 +101,7 @@ class ShoppingListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shopping_list_params
-      params.require(:shopping_list).permit(:title, recipes_attributes: [:id, :url])
+      params.require(:shopping_list).permit(:title, :private, recipes_attributes: [:id, :url])
     end
 
 end

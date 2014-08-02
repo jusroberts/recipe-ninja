@@ -1,0 +1,10 @@
+%nav.top-bar
+  %ul.title-area
+    %li.name
+      %h1=link_to 'Home', my_lists_path if current_user
+      %h1=link_to 'Home', root_path unless current_user
+  %section.top-bar-section
+    %ul.right
+      %li=link_to 'Public Lists', root_path if current_user
+      %li=link_to 'Sign in', new_user_session_path unless current_user
+      %li=link_to 'Sign out', destroy_user_session_path, :method => :delete if current_user
