@@ -6,27 +6,32 @@
         - @shopping_list.errors.full_messages.each do |msg|
           %li= msg
 
-
-  .columns.small-1= f.label :title
-  .columns.small-11= f.text_field :title
+  .row
+    .columns.small-1= f.label :title
+    .columns.small-11= f.text_field :title
   -if current_user
-    .columns.small-1= f.label :private?
-    .columns.small-11= f.check_box :private
-  %h3
-    Recipes
-    %i.fi-plus#add_recipe
-  .small-10.small-offset-1
-    .border
-      .bold Please note:
-      %ul
-        %li
-          We only have support for Allrecipes and FoodNetwork right now, with Allrecipes being the most likely to not have issues.
-          Other sites may work, but have not been tested.
-        %li
-          If you have a favorite site that's not either of these two, please let me know and I'll work on integrating it.
+    .row
+      .columns.small-1= f.label :private?
+      .columns.small-11= f.check_box :private
+  .row
+    %h3
+      Recipes
+      %i.fi-plus#add_recipe
+  .row
+    .small-10.small-offset-1
+      .border
+        .bold Please note:
+        %ul
+          %li
+            We only have support for Allrecipes and FoodNetwork right now, with Allrecipes being the most likely to not have issues.
+            Other sites may work, but have not been tested.
+          %li
+            If you have a favorite site that's not either of these two, please let me know and I'll work on integrating it.
   =f.fields_for :recipes do |recipe_form|
-    .columns.small-1= recipe_form.label "Url"
-    .columns.small-11= recipe_form.text_field :url
-  .columns.small-3= link_to 'Back', shopping_lists_path, class: 'button'
-  .columns.small-3.large-2.right= f.submit 'Save', class: 'button'
+    .row
+      .columns.small-1= recipe_form.label "Url"
+      .columns.small-11= recipe_form.text_field :url
+  .row
+    .columns.small-3= link_to 'Back', shopping_lists_path, class: 'button'
+    .columns.small-3.large-2.right= f.submit 'Save', class: 'button'
 
