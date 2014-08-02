@@ -36,7 +36,6 @@ class ShoppingListsController < ApplicationController
   # POST /shopping_lists.json
   def create
     modified_params = remove_empty_recipes(shopping_list_params)
-    binding.pry
     if shopping_list_params[:private] == "1"
       modified_params[:user_id] = current_user.id
     end
