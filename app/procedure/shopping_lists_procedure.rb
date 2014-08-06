@@ -1,3 +1,5 @@
+require 'ingredient'
+require 'structs'
 class ShoppingListsProcedure
   attr_accessor :shopping_list, :ingredient_list, :recipes
   def initialize(shopping_list)
