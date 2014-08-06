@@ -18,7 +18,9 @@ module Ingredient
       protected
 
       def custom_before_parsing(ingredient_string)
-        ingredient_string
+        ingredient_string.gsub!("\n", '')
+        ingredient_string.gsub!("\r", '')
+        ingredient_string.split.join(" ")
       end
 
       def custom_after_parsing(ingredient_struct)
