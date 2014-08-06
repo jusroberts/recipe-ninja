@@ -35,7 +35,7 @@ class ShoppingListsProcedure
     recipe_html = open(recipe_url).read
     parsed_recipe = Hangry.parse(recipe_html)
 
-    Structs::Recipe.new(
+    Structs::PulledRecipe.new(
       parsed_recipe.name,
       get_picture_link(recipe_html, recipe_url),
       recipe_url,

@@ -28,7 +28,7 @@ module Ingredient
       private
 
       def convert_ingredient(unconverted_ingredient)
-        ingredient = Structs::Ingredient.new
+        ingredient = Structs::ParsedIngredient.new
         ingredient.ingredient = unconverted_ingredient.ingredient
         ingredient.amount = unconverted_ingredient.amount
         ingredient.unit = unconverted_ingredient.unit
