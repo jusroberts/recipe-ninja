@@ -29,22 +29,44 @@ class ShoppingListsProcedure
     recipes = []
     @shopping_list.recipes.each do |recipe|
       next if recipe.url.blank?
-      recipes << parse_recipe(recipe.url)
+      parsed_recipe = parse_recipe(recipe.url)
+      next if parsed_recipe.nil?
+      recipes << parsed_recipe
     end
     recipes
   end
 
 
   def parse_recipe recipe_url
-    recipe_html = open(recipe_url).read
-    parsed_recipe = Hangry.parse(recipe_html)
-
+    parsed_recipe, recipe_html = get_parsed_recipe recipe_url
+    return if parsed_recipe.nil?
     Structs::PulledRecipe.new(
       parsed_recipe.name,
       get_picture_link(recipe_html, recipe_url),
       recipe_url,
       parsed_recipe.ingredients
     )
+  end
+
+  def get_parsed_recipe recipe_url
+    recipe_html = open(recipe_url).read
+    parsed_recipe = Hangry.parse(recipe_html)
+    if parsed_recipe.ingredients.nil?
+      recipe_url = known_recipe_uri_generator(recipe_url)
+      return get_parsed_recipe(recipe_url) unless recipe_url.nil?
+    end
+    return parsed_recipe, recipe_html
+  end
+
+  def known_recipe_uri_generator (recipe_url)
+    uri = URI(recipe_url)
+    if uri.host == 'm.allrecipes.com'
+      path = uri.path.split('/')
+      url = "http://allrecipes.com"
+      url += "/#{path[1]}/#{path[3]}"
+      return url
+    end
+    return nil
   end
 
   def get_picture_link html, url
